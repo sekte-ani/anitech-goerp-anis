@@ -1,0 +1,52 @@
+version: "3.8"
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: anisgolang-app
+    container_name: anis-app
+    restart: unless-stopped
+    ports:
+      - "8011:8011"
+    depends_on:
+      - db
+    networks:
+      - anis
+
+  db:
+    image: mysql:5.7
+    platform: linux/amd64
+    container_name: anis-db
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: secret
+      MYSQL_DATABASE: anierp
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+    networks:
+      - anis
+
+  phpmyadmin:
+    image: phpmyadmin:latest
+    platform: linux/amd64
+    container_name: anis-phpmyadmin
+    restart: unless-stopped
+    environment:
+      PMA_HOST: db
+      MYSQL_ROOT_PASSWORD: secret
+    ports:
+      - "8012:80"
+    networks:
+      - anis
+
+networks:
+  anierp:
+    driver: bridge
+
+volumes:
+  db_data:
+    driver: local
