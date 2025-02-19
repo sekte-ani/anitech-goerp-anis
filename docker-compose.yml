@@ -5,8 +5,8 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    image: anisgolang-app
-    container_name: anis-app
+    image: golang-app
+    container_name: goanis-app
     restart: unless-stopped
     ports:
       - "8010:8011"
