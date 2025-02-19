@@ -16,7 +16,3 @@ services:
 networks:
   anis:
     driver: bridge
-
-volumes:
-  db_data:
-    driver: local
