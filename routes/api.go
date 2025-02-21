@@ -14,7 +14,7 @@ func InitRoutes(app *gin.Engine) {
 	api := route.Group("/api")
 	{
 		api.GET("/services", controllers.GetAllService)
-		api.GET("/services/:name_slug", controllers.GetByNameSlug)
+		api.GET("/services/:id", controllers.GetServiceByID)
 		api.GET("/portfolios", controllers.GetAllPortfolio)
 		api.GET("/testimonials", controllers.GetAllTestimonial)
 	}

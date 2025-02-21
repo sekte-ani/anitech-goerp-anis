@@ -50,16 +50,16 @@ func GetAllService(ctx *gin.Context) {
 	ctx.JSON(200, gin.H{"data": serviceResponse})
 }
 
-func GetByNameSlug(ctx *gin.Context) {
-	serviceNameSlug := ctx.Param("name_slug")
+func GetServiceByID(ctx *gin.Context) {
+	serviceID := ctx.Param("id")
 
-	if serviceNameSlug == "" {
-		ctx.JSON(400, gin.H{"message": "Param name_slug is required"})
+	if serviceID == "" {
+		ctx.JSON(400, gin.H{"message": "Param id is required"})
 		return
 	}
 
 	service := new(models.Service)
-	err := database.DB.Preload("Packages").First(service, "name_slug = ?", serviceNameSlug).Error
+	err := database.DB.Preload("Packages").First(service, serviceID).Error
 
 	if err == gorm.ErrRecordNotFound {
 		ctx.JSON(404, gin.H{"message": "Service not found"})
